@@ -68,6 +68,7 @@ function storeGet(key, timestamp, res) {
         }).sort({'timestamp': -1}).limit(1).exec(function (err, returnedValue) {
             if (err) {
                 res.send(err);
+                return;
             }
             if (returnedValue[0]) {
                 res.send(returnedValue[0]._doc.value.toString());
@@ -81,6 +82,7 @@ function storeGet(key, timestamp, res) {
         }).sort({'timestamp': -1}).limit(1).exec(function (err, returnedValue) {
             if (err) {
                 res.send(err);
+                return;
             }
             if (returnedValue[0]) {
                 res.send(returnedValue[0]._doc.value.toString());
