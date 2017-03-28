@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
 // Endpoint: /object || Endpoint: /object/mykey  || Endpoint: /object/mykey?timestamp=1440568980
 router.get('/object/:key', function (req, res) {
 
-    var key = "";
+    var key;
     var timestamp;
     key = req.params.key;
 
@@ -35,6 +35,11 @@ router.post('/object', function (req, res) {
 
 function storePut(key, value, res) {
     var db = new mongoOp();
+
+    if(!key){
+        res.status(404).send("Key can't be empty");
+        return;
+    }
 
     db.key = key;
     db.value = value;
@@ -77,7 +82,6 @@ function storeGet(key, timestamp, res) {
             if (err) {
                 res.send(err);
             }
-            console.log(returnedValue);
             if (returnedValue[0]) {
                 res.send(returnedValue[0]._doc.value.toString());
             } else {
